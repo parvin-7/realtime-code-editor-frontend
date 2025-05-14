@@ -14,7 +14,7 @@ const Output = ({ code }) => {
         }
 
         try {
-            const response = await axios.post('http://localhost:5000/run', {
+            const response = await axios.post('https://realtimecodeeditor.up.railway.app/', {
                 source_code: code,
                 language_id: language,
                 stdin: "",
