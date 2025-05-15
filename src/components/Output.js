@@ -14,7 +14,8 @@ const Output = ({ code }) => {
         }
 
         try {
-            const response = await axios.post('https://realtimecodeeditor.up.railway.app/', {
+            const baseURL = process.env.REACT_APP_BACKEND_URL.replace(/\/+$/, '');
+            const response = await axios.post(`${baseURL}/run`, {
                 source_code: code,
                 language_id: language,
                 stdin: "",
