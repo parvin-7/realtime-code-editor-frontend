@@ -3,7 +3,7 @@ import Client from '../components/Client'
 import Editor from '../components/Editor'
 import { initSocket } from '../socket'
 import ACTIONS from '../Actions'
-import { useLocation,useNavigate, Navigate, useParams } from 'react-router-dom'
+import { useLocation, useNavigate, Navigate, useParams } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import Output from '../components/Output'
 
@@ -13,42 +13,41 @@ function EditorPage() {
   const codeRef = useRef(null)
   const [code, setCode] = useState('')
   const location = useLocation()
-  const {roomId} = useParams()
+  const { roomId } = useParams()
   const reactNavigator = useNavigate()
-  const [clients,setClients] = useState([])
+  const [clients, setClients] = useState([])
 
   useEffect(() => {
-    const init = async () =>{
-      socketRef.current = await initSocket() 
-      socketRef.current.on('connect_error',(err) => handleErrors(err))
-      socketRef.current.on('connect_failed',(err) => handleErrors(err))
-      
-      function handleErrors(e){
-        console.log('socket error',e)
-        toast.error('Socket connection failed, try again later')
-        reactNavigator('/')
+    const init = async () => {
+      socketRef.current = await initSocket()
+      socketRef.current.on('connect_error', (err) => handleErrors(err))
+      socketRef.current.on('connect_failed', (err) => handleErrors(err))
 
+      function handleErrors(e) {
+        console.log('socket error ji:', e);
+        toast.error('Socket connection failed, try again later');
+        reactNavigator('/');
       }
       socketRef.current.emit(ACTIONS.JOIN, {
         roomId,
-        username:location.state?.username,
+        username: location.state?.username,
       })
 
-      socketRef.current.on(ACTIONS.JOINED,({clients, username, socketId})=>{
-        if(username !== location.state?.username){
+      socketRef.current.on(ACTIONS.JOINED, ({ clients, username, socketId }) => {
+        if (username !== location.state?.username) {
           toast.success(`${username} joined the room`)
         }
         setClients(clients)
         socketRef.current.emit(ACTIONS.SYNC_CODE, {
-          code:codeRef.current,
+          code: codeRef.current,
           socketId,
         }
         )
       })
 
-      socketRef.current.on(ACTIONS.DISCONNECTED,({socketId, username}) =>{
+      socketRef.current.on(ACTIONS.DISCONNECTED, ({ socketId, username }) => {
         toast.success(`${username} left the room`)
-        setClients((prev)=>{
+        setClients((prev) => {
           return prev.filter(client => client.socketId !== socketId)
         })
       })
@@ -56,13 +55,13 @@ function EditorPage() {
 
 
     init()
-    return () =>{
+    return () => {
       socketRef.current.disconnect()
       socketRef.current.off(ACTIONS.JOINED)
       socketRef.current.off(ACTIONS.DISCONNECTED)
     }
   }, [])
-  
+
   async function copyRoomId() {
     try {
       await navigator.clipboard.writeText(roomId)
@@ -70,13 +69,13 @@ function EditorPage() {
     } catch (error) {
       toast.error('Something went wrong')
     }
-  } 
-   
-  function leaveRoom(){
+  }
+
+  function leaveRoom() {
     reactNavigator('/')
   }
-  if(!location.state){
-    return <Navigate to='/'/>
+  if (!location.state) {
+    return <Navigate to='/' />
   }
 
   return (
@@ -90,7 +89,7 @@ function EditorPage() {
 
           <div className='clientsList'>
             {clients.map((client) => (
-              <Client key={client.socketId} username={client.username}/>
+              <Client key={client.socketId} username={client.username} />
             ))}
           </div>
 
@@ -101,16 +100,16 @@ function EditorPage() {
 
       <div className='editorWrap'>
         <Editor
-         socketRef= {socketRef} 
-         roomId={roomId} 
-         onCodeChange={(newCode)=>{
-          codeRef.current = newCode
-          setCode(newCode)
-          }}/>
-        <Output code={code}/>
+          socketRef={socketRef}
+          roomId={roomId}
+          onCodeChange={(newCode) => {
+            codeRef.current = newCode
+            setCode(newCode)
+          }} />
+        <Output code={code} />
       </div>
-      
-      
+
+
     </div>
   )
 }
