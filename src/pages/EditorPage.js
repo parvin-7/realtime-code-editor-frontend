@@ -9,7 +9,7 @@ import toast, { Toaster } from 'react-hot-toast';
 
 
 function EditorPage() {
-    const socketRef = useRef(null);
+    const socketRef = useRef();
     const codeRef = useRef(null);
     const [code, setCode] = useState('');
     const location = useLocation();
