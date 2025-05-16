@@ -7,7 +7,7 @@ export const initSocket = async () => {
   const socket = io(URL, {
     reconnection: true,
     reconnectionAttempts: 5,
-    reconnectionDelay: 1000,
+    reconnectionDelay: 10000,
   });
   socket.on('connect', () => {
     console.log('Socket connected on client:', socket.id);
