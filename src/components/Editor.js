@@ -62,7 +62,8 @@ const Editor = ({ socketRef, roomId,onCodeChange }) => {
     socketRef.to.off(ACTIONS.CODE_CHANGE)
   }
     
-  }, [socketRef.current])
+  },
+   [socketRef.current])
   
   
 
