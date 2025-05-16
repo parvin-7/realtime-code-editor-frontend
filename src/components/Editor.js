@@ -46,7 +46,7 @@ const Editor = ({ socketRef, roomId,onCodeChange }) => {
     init();
 
     
-  }, []); 
+  }, [onCodeChange, roomId, socketRef]); 
 
   useEffect(() => {
 
@@ -62,7 +62,7 @@ const Editor = ({ socketRef, roomId,onCodeChange }) => {
     socketRef.current.off(ACTIONS.CODE_CHANGE)
   }
     
-  }, [socketRef.current])
+  }, [socketRef])
   
   
 

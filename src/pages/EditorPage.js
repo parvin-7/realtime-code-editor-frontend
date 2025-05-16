@@ -6,7 +6,7 @@ import { initSocket } from '../socket';
 import ACTIONS from '../Actions';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
-import { Navigate } from 'react-router-dom';
+
 
 function EditorPage() {
     const socketRef = useRef(null);
@@ -21,7 +21,7 @@ function EditorPage() {
     const username = location.state?.username || localStorage.getItem('username');
 
     // Use a state to track if we should render the component
-    const [shouldRedirect, setShouldRedirect] = useState(!username);
+    const [shouldRedirect] = useState(!username);
 
     // Store username in localStorage on first load
     useEffect(() => {

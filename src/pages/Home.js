@@ -62,7 +62,7 @@ function Home() {
                 <button className='btn joinBtn' onClick={joinRoom}>Join</button>
                 <span className='createInfo'>Create new room id &nbsp;
 
-                    <a onClick={createNewRoom} href='' className='createRoomId'>New room</a>
+                    <button onClick={createNewRoom} href='' className='createRoomId'>New room</button>
                 </span>
             </div>
         </div>
