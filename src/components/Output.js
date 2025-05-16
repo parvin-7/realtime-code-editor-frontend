@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
-import axios from 'axios'
+import React, { useState } from 'react';
+import axios from 'axios';
 
 const Output = ({ code }) => {
-    const [output, setOutput] = useState("")
-    const [language, setLanguage] = useState('63')
+    const [output, setOutput] = useState("");
+    const [language, setLanguage] = useState('63');
 
     const runCode = async () => {
         console.log("Code received in Output:", code);
@@ -21,7 +21,6 @@ const Output = ({ code }) => {
                 stdin: "",
             });
 
-
             setOutput(
                 response.data.stdout?.trim() ||
                 response.data.stderr?.trim() ||
@@ -29,8 +28,6 @@ const Output = ({ code }) => {
                 JSON.stringify(response.data) ||
                 "No output or error returned"
             );
-
-
         } catch (error) {
             console.log(error);
             setOutput("Execution error");
@@ -38,7 +35,6 @@ const Output = ({ code }) => {
     };
 
     return (
-
         <div className="outputWrap">
             <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
                 <button className="btn runButton" onClick={runCode}>Run</button>
@@ -59,8 +55,7 @@ const Output = ({ code }) => {
             <label id='labelOutput' htmlFor="outputBlock">Output:</label>
             <textarea id="outputBlock" value={output} readOnly />
         </div>
+    );
+};
 
-    )
-}
-
-export default Output
+export default Output;

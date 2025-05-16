@@ -177,7 +177,9 @@ footer{
 #labelOutput{
     margin-left: 20px;
 }
-
+.react-avatar {
+    display: inline-block !important;
+}
 @media screen and (max-width: 768px) {
     .mainWrap {
         grid-template-columns: 1fr;
